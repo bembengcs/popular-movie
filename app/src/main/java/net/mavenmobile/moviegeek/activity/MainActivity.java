@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
     private List<Movie> movieList;
     private ApiInterface apiService;
     private MoviesAdapter mMovieAdapter;
-    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
             return;
         }
 
-//        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
         loadTopRatedMovie();
@@ -96,23 +95,6 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
                 contentValues.put(MovieContract.MovieEntry.COLUMN_SYNOPSIS, movie.getOverview());
                 contentValues.put(MovieContract.MovieEntry.COLUMN_IS_TOP_RATED, 1);
 
-                getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
-            }
-        }
-    }
-
-    private void insertFavouriteToDB(List<Movie> movies) {
-        for (Movie movie : movies) {
-            Cursor cursor = getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, "movieId=?", new String[]{String.valueOf(movie.getId())}, null);
-            if (!cursor.moveToFirst()) {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MovieContract.MovieEntry.COLUMN_ID, movie.getId());
-                contentValues.put(MovieContract.MovieEntry.COLUMN_TITLE, movie.getTitle());
-                contentValues.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
-                contentValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_POSTER_PATH, movie.getPosterPath());
-                contentValues.put(MovieContract.MovieEntry.COLUMN_RATING, movie.getVoteAverage());
-                contentValues.put(MovieContract.MovieEntry.COLUMN_SYNOPSIS, movie.getOverview());
-                contentValues.put(MovieContract.MovieEntry.COLUMN_IS_FAVOURITE, 1);
                 getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
             }
         }
@@ -187,5 +169,10 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra("movieId", movieId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }

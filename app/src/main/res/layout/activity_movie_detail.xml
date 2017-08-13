@@ -21,8 +21,9 @@
             <ImageView
                 android:id="@+id/ivMoviePoster"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -74,6 +75,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/mark_as_favorite"
+            android:background="@color/primary"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/margin16"/>
+
+        <Button
+            android:id="@+id/btnUnmarkAsFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unmark_as_favorite"
             android:background="@color/primary"
             android:textColor="@android:color/white"
             android:layout_marginBottom="@dimen/margin16"/>

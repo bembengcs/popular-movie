@@ -2,11 +2,9 @@ package net.mavenmobile.moviegeek.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,11 +53,14 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieVideo
     RecyclerView mRecyclerView;
     @BindView(R.id.recycler_view_reviews)
     RecyclerView mRecyclerViewReviews;
+    @BindView(R.id.btnMarkAsFavorite)
+    Button mBtnMarkAsFavorite;
+    @BindView(R.id.btnUnmarkAsFavorite)
+    Button mBtnUnmarkAsFavorite;
+
 
     private final static String API_KEY = "";
     private final static String URL_YOUTUBE_BASE = "http://www.youtube.com/watch?v=";
-    @BindView(R.id.btnMarkAsFavorite)
-    Button mBtnMarkAsFavorite;
     private ApiInterface apiService;
     private String TAG = MovieDetailActivity.class.getSimpleName();
     private Movie movieDetail;
@@ -90,7 +91,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieVideo
         loadMovieDetails();
         loadValueMovieVideos();
         loadValueMovieReviews();
+        initOnClick();
+    }
 
+    private void initOnClick() {
         mBtnMarkAsFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,14 +105,20 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieVideo
                     contentValues.put("movieFavorite", movieFavorite == "1" ? "0" : "1");
                     getContentResolver().update(MovieContract.MovieEntry.CONTENT_URI, contentValues, "movieId=?", new String[]{String.valueOf(movieDetail.getId())});
                     Toast.makeText(MovieDetailActivity.this, "Mark movie as favorite", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-                } else {
+        mBtnUnmarkAsFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor cursor = getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, "movieId=?", new String[]{String.valueOf(movieDetail.getId())}, null);
+                if (cursor.moveToFirst()) {
                     String movieFavorite = cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_IS_FAVOURITE));
                     ContentValues contentValues = new ContentValues();
                     contentValues.put("movieFavorite", movieFavorite == "0" ? "1" : "0");
                     getContentResolver().update(MovieContract.MovieEntry.CONTENT_URI, contentValues, "movieId=?", new String[]{String.valueOf(movieDetail.getId())});
-                    Toast.makeText(MovieDetailActivity.this, "Remove movie from favorite", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(MovieDetailActivity.this, "Unmark movie as favorite", Toast.LENGTH_SHORT).show();
                 }
             }
         });
