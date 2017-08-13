@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private final static String API_KEY = "a570559e5330ae9ff69fa687a77b141d";
+    private final static String API_KEY = "";
     private String TAG = MainActivity.class.getSimpleName();
     private List<Movie> movieList;
     private ApiInterface apiService;

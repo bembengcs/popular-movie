@@ -56,7 +56,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieVideo
     @BindView(R.id.recycler_view_reviews)
     RecyclerView mRecyclerViewReviews;
 
-    private final static String API_KEY = "a570559e5330ae9ff69fa687a77b141d";
+    private final static String API_KEY = "";
     private final static String URL_YOUTUBE_BASE = "http://www.youtube.com/watch?v=";
     @BindView(R.id.btnMarkAsFavorite)
     Button mBtnMarkAsFavorite;
