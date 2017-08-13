@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Movie Geek</string>
+    <string name="action_popular_movies">Sort by popular movies</string>
+    <string name="action_top_rated_movies">Sort by top rated movies</string>
+    <string name="action_favourite_movie">Sort by favourite movies</string>
+    <string name="pref_sort_method_key">SORT_METHOD</string>
+    <string name="lblRating">Rating</string>
+    <string name="lblMovieTitle">Movie Title</string>
+    <string name="lblReleaseDate">Release Date</string>
+    <string name="lblSynopsis">Synopsis</string>
+    <string name="lblTrailers">Trailers:</string>
+    <string name="lblReviews">Reviews:</string>
+    <string name="mark_as_favorite">MARK AS FAVORITE</string>
+</resources>
