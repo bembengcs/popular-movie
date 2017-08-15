@@ -7,3 +7,4 @@
 /build
 /captures
 .externalNativeBuild
+/app/build/generated/source/r/androidTest/debug/android/app/R.java
